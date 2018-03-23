@@ -1,5 +1,4 @@
 
-
 #This file spins up a new ec2 Server and Security Group
 
 provider "aws" {
@@ -52,9 +51,37 @@ resource "aws_instance" "DevOpsProjectinstance" {
         tags {
         Name = "DevOpsProjectInstance"
         }
+
+  connection {
+            user = "ec2-user"
+            private_key = "${file("/home/ec2-user/devops-project.pem")}"
+            host = "${self.public_ip}"
+            timeout = "2m"
+        }
+
+provisioner "file" {
+    source      = "/home/ec2-user/Terraform/httpd-setup/index.html"
+    destination = "/home/ec2-user/index.html"
+  }
+
+provisioner "file" {
+    source      = "/home/ec2-user/Terraform/httpd-setup/httpd.conf"
+    destination = "/home/ec2-user/httpd.conf"
+  }
+
+
+provisioner "remote-exec" {
+    inline = [
+   "sudo yum install -y httpd mod_ssl && sudo cp /home/ec2-user/httpd.conf /etc/httpd/conf/httpd.conf && sudo service httpd restart",
+   "sudo cp /home/ec2-user/index.html /var/www/html/index.html",
+   "sudo mkdir -p /etc/httpd/ssl",
+   "sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/httpd/ssl/apache.key -out /etc/httpd/ssl/apache.crt -subj \"/C=US/O=test/OU=Retirements/CN=example.com\"",
+   "sudo service httpd restart && sudo apachectl configtest"
+    ]
+  }
 		        
-user_data = "${file("apache.sh")}"
-user_data = "${file("ssl.sh")}"
-user_data = "${file("testconfig.sh")}"
+#user_data = "${file("apache.sh")}"
+#user_data = "${file("ssl.sh")}"
+#user_data = "${file("testconfig.sh")}"
 
 }
