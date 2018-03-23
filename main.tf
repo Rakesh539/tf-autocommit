@@ -53,8 +53,8 @@ resource "aws_instance" "DevOpsProjectinstance" {
         Name = "DevOpsProjectInstance"
         }
 		        
-#user_data = "${file("apache.sh")}"
-#user_data = "${file("ssl.sh")}"
-#user_data = "${file("testconfig.sh")}"
+user_data = "${file("apache.sh")}"
+user_data = "${file("ssl.sh")}"
+user_data = "${file("testconfig.sh")}"
 
 }
