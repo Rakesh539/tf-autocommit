@@ -80,11 +80,6 @@ provisioner "remote-exec" {
     ]
   }
 		        
-output "public_ip" {
-  description = "List of public IP addresses assigned to the instances, if applicable"
-  value = "${aws_instance.ec2_instance.public_ip}" 
-}
-
 #user_data = "${file("apache.sh")}"
 #user_data = "${file("ssl.sh")}"
 #user_data = "${file("testconfig.sh")}"
