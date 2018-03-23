@@ -80,6 +80,10 @@ provisioner "remote-exec" {
     ]
   }
 		        
+output "ip"{
+value = "${self.public_ip}"
+}
+
 #user_data = "${file("apache.sh")}"
 #user_data = "${file("ssl.sh")}"
 #user_data = "${file("testconfig.sh")}"
