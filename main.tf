@@ -51,14 +51,14 @@ resource "aws_instance" "DevOpsProjectinstance" {
         tags {
         Name = "DevOpsProjectInstance"
         }
-
+/*
   connection {
             user = "ec2-user"
             private_key = "${file("/home/ec2-user/devops-project.pem")}"
             host = "${self.public_ip}"
             timeout = "2m"
         }
-
+*/
 provisioner "file" {
     source      = "/home/ec2-user/Terraform/httpd-setup/index.html"
     destination = "/home/ec2-user/index.html"
