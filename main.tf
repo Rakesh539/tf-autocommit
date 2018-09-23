@@ -8,8 +8,8 @@ provider "aws" {
 }
 
 resource "aws_security_group" "lnx_web" {
-  name        = NAME
-  description = DESCRIPTION
+  name        = "test"
+  description = "test"
   
 	tags {
         Name = "lnx_web"
